@@ -1,26 +1,22 @@
 import path from 'path';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack, { Configuration as WebpackConfig } from 'webpack';
 
 const config: WebpackConfig = {
   entry: './index.tsx',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name].bundle.js',
+    publicPath: '/',
+    clean: true,
+  },
   context: path.resolve(__dirname, 'src'),
   module: {
     rules: [
       {
-        test: /\.(ts|js)x?$/i,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-              '@babel/preset-typescript',
-            ],
-          },
-        },
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /(vendor|node_modules|dist)/,
+        use: 'babel-loader',
       },
     ],
   },
@@ -29,7 +25,6 @@ const config: WebpackConfig = {
   },
   plugins: [
     new webpack.ProgressPlugin(),
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'index.html',
       minify: {
