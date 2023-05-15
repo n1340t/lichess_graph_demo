@@ -7,6 +7,7 @@ const prodConfig: WebpackConfig = {
   output: {
     filename: '[name].[fullhash:8].bundle.js', // '[name].bundle.js',
     chunkFilename: '[name].[chunkhash:8].chunk.js',
+    publicPath: './',
   },
 };
 
